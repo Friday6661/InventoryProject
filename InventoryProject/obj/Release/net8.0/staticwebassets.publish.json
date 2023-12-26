@@ -1,0 +1,58 @@
+{
+  "Version": 1,
+  "Hash": "7VreX+yLFRHM83o4gOADCHCebTXQcLc8or1dtynCs+o=",
+  "Source": "InventoryProject",
+  "BasePath": "_content/InventoryProject",
+  "Mode": "Default",
+  "ManifestType": "Publish",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "InventoryProject\\wwwroot",
+      "Source": "InventoryProject",
+      "ContentRoot": "c:\\Friday\\InventoryProject\\InventoryProject\\wwwroot\\",
+      "BasePath": "_content/InventoryProject",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Friday\\InventoryProject\\InventoryProject\\wwwroot\\images\\products\\20231225202744.jpg",
+      "SourceId": "InventoryProject",
+      "SourceType": "Discovered",
+      "ContentRoot": "c:\\Friday\\InventoryProject\\InventoryProject\\wwwroot\\",
+      "BasePath": "_content/InventoryProject",
+      "RelativePath": "images/products/20231225202744.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\products\\20231225202744.jpg"
+    },
+    {
+      "Identity": "C:\\Friday\\InventoryProject\\InventoryProject\\wwwroot\\images\\products\\20231225202804.jpg",
+      "SourceId": "InventoryProject",
+      "SourceType": "Discovered",
+      "ContentRoot": "c:\\Friday\\InventoryProject\\InventoryProject\\wwwroot\\",
+      "BasePath": "_content/InventoryProject",
+      "RelativePath": "images/products/20231225202804.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\products\\20231225202804.jpg"
+    }
+  ]
+}

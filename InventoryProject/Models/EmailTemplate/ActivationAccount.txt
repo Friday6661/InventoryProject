@@ -1,0 +1,6 @@
+Hi {0},<br><br>
+Thanks for your registration process,<br>
+PLease click the following link to confirm your account:<br><br>
+<a href="{1}">{1}</a><br><br>
+Best Regards,<br>
+The Inventory Management Administration

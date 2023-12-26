@@ -1,4 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
 using InventoryProject.Contracts;
@@ -15,12 +16,14 @@ namespace InventoryProject.Repositories
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _config;
+        private readonly IEmailService _emailService;
 
-        public AccountRepository(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration config)
+        public AccountRepository(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration config, IEmailService emailService)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _config = config;
+            _emailService = emailService;
         }
 
 
@@ -41,6 +44,21 @@ namespace InventoryProject.Repositories
 
             var createUser = await _userManager.CreateAsync(newUser!, userDTO.Password);
             if(!createUser.Succeeded) return new GeneralResponse(false, "Error occured.. Please try again later");
+
+            var emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
+            // var confirmationLink = $"{_config["AppBaseUrl"]}/Confirm-Email?userId={WebUtility.UrlEncode(newUser.Id)}&token={WebUtility.UrlEncode(emailConfirmationToken)}";
+            var confirmationLink = $"{_config["AppBaseUrl"]}/Confirm-Email?userId={Uri.EscapeDataString(newUser.Id)}&token={Uri.EscapeDataString(emailConfirmationToken)}";
+
+            var emailConfirmationTemplate = _emailService.LoadEmailTemplate("Models/EmailTemplate/ActivationAccount.txt");
+            var emailBody = string.Format(emailConfirmationTemplate, userDTO.UserName, confirmationLink);
+            var emailDTO = new SendEmailDTO
+            {
+                ToEmail = userDTO.Email,
+                Subject = "Account Activation",
+                Body = emailBody
+            };
+
+            await _emailService.SendEmailAsync(emailDTO);
 
             var checkManager = await _roleManager.FindByNameAsync("Manager");
             if (checkManager is null)
@@ -102,6 +120,22 @@ namespace InventoryProject.Repositories
             return new UserProfileResponse(true, userProfile, "User Profile Retrived Successfully");
         }
 
+        public async Task<GeneralResponse> ConfirmEmailAsync(string userId, string token)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user is null) return new GeneralResponse(false, "User not found");
+            var result = await _userManager.ConfirmEmailAsync(user, token);
+            if (result.Succeeded)
+            {
+                return new GeneralResponse(true, "Email Confirmed Successfully");
+            }
+            else
+            {
+                return new GeneralResponse(false, "Email confirmation failed");
+            }
+        }
+
+
         private string GenerateToken(UserSession userSession)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:Key"]!));
@@ -121,6 +155,44 @@ namespace InventoryProject.Repositories
                 signingCredentials: credentials
             );
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        public async Task<GeneralResponse> ResetPasswordAsync(string email, string token, string newPassword)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user is null) return new GeneralResponse(false, "User not found");
+            var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
+            if (result.Succeeded)
+            {
+                return new GeneralResponse(true, "Password Reset Successfully");
+            }
+            else
+            {
+                return new GeneralResponse(false, "Password reset failed");
+            }
+        }
+
+        public async Task<GeneralResponse> ForgotPassword(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null || !await _userManager.IsEmailConfirmedAsync(user))
+            {
+                return new GeneralResponse(false, "User not found");
+            }
+
+            var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+            // var resetLink = $"{_config["AppBaseUrl"]}/Reset-Password?userId={Uri.EscapeDataString(user.Id)}&token={Uri.EscapeDataString(resetToken)}";
+            var emailResetTemplate = _emailService.LoadEmailTemplate("Models/EmailTemplate/ResetPassword.txt"); 
+            var emailBody = string.Format(emailResetTemplate, user.UserName, resetToken);
+            var emailDTO = new SendEmailDTO
+            {
+                ToEmail = user.Email,
+                Subject = "Reset Password Request",
+                Body = emailBody
+            };
+
+            await _emailService.SendEmailAsync(emailDTO);
+            return new GeneralResponse(true, "Password reset link sent to your email");
         }
     }
 }

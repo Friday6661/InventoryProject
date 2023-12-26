@@ -27,10 +27,13 @@ builder.Services.AddDbContext<InventoryDbContext>(options =>
 
 // Add Identity & JWT Authentication
 // Identity
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => {
+    options.Tokens.EmailConfirmationTokenProvider = "Default";
+})
     .AddEntityFrameworkStores<InventoryDbContext>()
     .AddSignInManager()
-    .AddRoles<IdentityRole>();
+    .AddRoles<IdentityRole>()
+    .AddDefaultTokenProviders();
 
 builder.Services.AddAuthentication(options =>
 {
@@ -62,6 +65,8 @@ builder.Services.AddSwaggerGen(options =>
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+
 builder.Services.AddScoped<IUserAccount, AccountRepository>();
 builder.Services.AddScoped<IProductCategory, ProductCategoryRepository>();
 builder.Services.AddScoped<IProduct, ProductRepository>();
@@ -69,6 +74,7 @@ builder.Services.AddScoped<IOrder, OrderRepository>();
 builder.Services.AddScoped<IOrderProductConsumable, OrderProductConsumableRepository>();
 builder.Services.AddScoped<IOrderProductReuseable, OrderProductReuseableRepository>();
 builder.Services.AddScoped<IProductIssue, ProductIssueRepository>();
+builder.Services.AddScoped<IEmailService, EmailServiceRepository>();
 
 builder.Services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);

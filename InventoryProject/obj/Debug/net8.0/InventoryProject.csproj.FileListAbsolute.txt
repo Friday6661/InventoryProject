@@ -140,3 +140,7 @@ C:\Friday\InventoryProject\InventoryProject\bin\Debug\net8.0\tr\Microsoft.CodeAn
 C:\Friday\InventoryProject\InventoryProject\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Friday\InventoryProject\InventoryProject\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Friday\InventoryProject\InventoryProject\bin\Debug\net8.0\InventoryProject.staticwebassets.runtime.json
+c:\Friday\InventoryProject\InventoryProject\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+c:\Friday\InventoryProject\InventoryProject\bin\Debug\net8.0\MailKit.dll
+c:\Friday\InventoryProject\InventoryProject\bin\Debug\net8.0\MimeKit.dll
+c:\Friday\InventoryProject\InventoryProject\obj\Debug\net8.0\InventoryProject.sourcelink.json

@@ -1,0 +1,29 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Friday\\InventoryProject\\InventoryProject\\wwwroot\\images\\products\\20231225202744.jpg",
+      "PackagePath": "staticwebassets\\images\\products\\20231225202744.jpg"
+    },
+    {
+      "Id": "C:\\Friday\\InventoryProject\\InventoryProject\\wwwroot\\images\\products\\20231225202804.jpg",
+      "PackagePath": "staticwebassets\\images\\products\\20231225202804.jpg"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.InventoryProject.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.build.InventoryProject.props",
+      "PackagePath": "build\\InventoryProject.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.InventoryProject.props",
+      "PackagePath": "buildMultiTargeting\\InventoryProject.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.buildTransitive.InventoryProject.props",
+      "PackagePath": "buildTransitive\\InventoryProject.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

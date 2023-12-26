@@ -8,5 +8,8 @@ namespace InventoryProject.Contracts
         Task<GeneralResponse> CreateAccountAsync(UserDTO userDTO);
         Task<LoginResponse> LoginAccountAsync(LoginDTO loginDTO);
         Task<UserProfileResponse> GetLoggedInUserProfileAsync(HttpContext context);
+        Task<GeneralResponse> ConfirmEmailAsync(string userId, string token);
+        Task<GeneralResponse> ResetPasswordAsync(string userId, string token, string newPassword);
+        Task<GeneralResponse> ForgotPassword(string email);
     }
 }
